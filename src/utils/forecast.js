@@ -16,8 +16,21 @@ const forecast = (latitude, longitude, callback) => {
 
         const data = response.body;
         const currentData = data.current;
-        const { temperature, feelslike, weather_descriptions: weatherDescription} = currentData;
-        callback(undefined, `${weatherDescription[0]}. It is currently ${temperature} degrees out. It feels like ${feelslike} degrees out.`);
+        const locationData = data.location;
+
+        const { localtime: localTime } = locationData;
+
+        const {
+            temperature,
+            feelslike,
+            weather_descriptions: weatherDescription,
+            wind_speed: windSpeed
+        } = currentData;
+
+        callback(
+            undefined,
+            `${weatherDescription[0]}. It is currently ${temperature} degrees out. Wind speed is ${windSpeed} km/h. It feels like ${feelslike} degrees out. Local time: ${localTime}`
+        );
     });
 }
 
